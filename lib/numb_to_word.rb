@@ -8,8 +8,8 @@ class Fixnum
 5 => "five", 6 => "six", 7 => "seven", 8 => "eight", 9 => "nine" }
     numbers_tey = {0 => "", 2 => "twenty", 3 => "thirty", 4 => "forty",
 5 => "fifty", 6 => "sixty", 7 => "seventy", 8 => "eighty", 9 => "ninety" }
-    numbers_teen = {1 => "eleven", 2 => "twelve", 3 => "thirteen", 4 => "fourteen",
-5 => "fifteen", 6 => "sixteen", 7 => "seventeen", 8 => "eighteen", 9 => "nineteen" }
+    numbers_teen = {0 => "ten", 1 => "eleven", 2 => "twelve", 3 => "thirteen", 4 => "fourteen",
+5 => "fifteen", 6 => "sixteen", 7 => "seventeen", 8 => "eighteen", 9 => "nineteen", nil => ""}
     temp_array = self.to_s.split('').reverse!()
     temp_array.each() do |numb|
       number_array.push(numb.to_i())
@@ -21,7 +21,9 @@ class Fixnum
             finder = final_array_nosyn.pop()
             finder2 = numbers.key(finder)
             final_array_nosyn.push("")
+
             final_array_nosyn.push(numbers_teen.fetch(finder2))
+
           else
             final_array_nosyn.push(numbers_tey.fetch(numb))
           end
@@ -29,20 +31,25 @@ class Fixnum
           final_array_nosyn.push(numbers.fetch(numb))
       end
         loop_counter = loop_counter.+(1)
-
     end
+
     if final_array_nosyn.length().>=(7)
       final_array_nosyn.insert(6, "million")
     end
-    if final_array_nosyn.length().>=(6)
+    if final_array_nosyn.length().>=(6) && number_array.at(5).!=(0)
       final_array_nosyn.insert(5, "hundred")
     end
     if final_array_nosyn.length().>=(4)
+      if number_array.at(5).==(0) && number_array.at(4).==(0) && number_array.at(3).==(0)
+        #stuff
+      else
       final_array_nosyn.insert(3, "thousand")
+      end
     end
-    if final_array_nosyn.length().>=(3)
-      final_array_nosyn.insert(2, "hundred and")
+    if final_array_nosyn.length().>=(3) && number_array.at(2).!=(0)
+      final_array_nosyn.insert(2, "hundred")
     end
+
     final_array_nosyn.reverse().join(" ")
   end
 end
